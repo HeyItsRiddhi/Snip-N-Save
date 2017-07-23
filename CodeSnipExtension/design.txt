@@ -1,0 +1,63 @@
+Overview:
+
+Before providing a deeper dive into architecture and files that create Snip & Save
+it is important to understand how Chrome Extensions work from a high level 
+perspective. We specifically chose the chrome environment so that we could focus
+on the backend logic and features of the application instead of spending time
+and resources trying to develop a new environment. Chrome has been tried and 
+tested over time which is why we thought this would be the most effective platform
+to share our project and ultimately empower more users in the long run. 
+
+
+Manifest.json
+
+Manifest.json is the boilerplate code required for every chrome extension.
+This is chrome's metadata that lists the specific name and version and
+references functionality that we incorporate into our extension. You can
+see familiar file names such as background, content scripts, and a term 
+page action which suggests there are many moving pieces for a chrome extension
+to work. 
+
+clipboard.min.js
+
+To incorporate a click to copy functionality, we have leverage a js library that already enables such functionality.
+
+contentScript.js
+
+Content scripts are files that run in the context of web pages. This js file allows for the program to read the details of the web pages or even make changes. 
+
+dexie.js
+
+Dexie is an open-sourced database that can interact with the browser. Per the documentation we are required to include the javascript file to bring in the functionality.
+
+popup.html
+
+When our extension is clicked, popup.html is what appears. we essentially create a "mini-webpage." We include links to our javascript files, a link to the css, our logo/title, a form, and divs for the code snippets.
+
+Popup.js
+
+This javascript file handles:
+ 
+1) receiving DOM info 
+2) database instantiation
+3) modifying the DOM
+
+Essentially this is the file that brings dynamism to popup.html
+
+prettify.css & prettify.js
+
+Prettify is an open sourced css and styling program that helps make code more readable. We used prettify css as our master css template as  it includes other additional not in the original source code.
+
+How it all comes together to form Snip & Save:
+
+Chrome extensions can be complex and hard to understand as they have files that interact with the webpage and other files that generate/interact with the extension’s popup. In this section, we hope to give you a clear picture of how things work under the hood. 
+
+As you may recall from our Architecture section; the contentScript.js interacts with the/ run on the webpage whilst popup.js interact with the extension’s popup (popup.html) and background.js acts as a liaison between the two. Background.js acts as a liaison between the two. Thus, when the extension icon is click, contentscript.js will send a message to background.js which will then display popup.html.
+
+When the popup icon is clicked on a supported webpage, pop.js will send a message to the contentScript.js requesting it for any code snippets on the page. As a result, contentScript.js has a function that listen for this message, and upon the receiving this message searches the page for any “pre” html tab as “pre” are most commonly used to display code. If contentScript.js finds any “pre” tags on the webpage it grab’s those elements and store them in an array. It then sends this array back to pop.js ‘s callback function, setDom. The setDom function will then display all the code snippet from the webpage in the extension popup and add a copy button and a save button with a input box for the title to each snippet. The copy button use a leverages a library called clipboard.js for it functionality. To use this library, we need to add a "data-clipboard-target" attribute to out button pointing to the text we would like it to copy. The save functionality uses a database library called dexie.js which allows us to save code snippet with a title to IndexDb, a local database on the browser, and search the database. This database is created after the all the code snippets have been added via the add_snip() function. The addSnip function, will created the database, and add onclick functions to all the save buttons in the popup. The onclick function it will add simple validate that the user entered a  title and if he/she did it will save the snippet to the database. Lastly the set dom function set the onclick function of the search button to a function called searchSnip. This function gets the valued entered in the input for beside the search function and search the database for that title. If the title is found it will return the code snippet with a copy function, implement the same way as the copy function when displaying snippets from the webpage. 
+
+UX/UI Design
+
+We spent a significant amount of time planning UX and UI. Before we even wrote a line of code we wanted to have a general idea of what we expected. Chrome extensions inherently are restricted to a max size. We knew that we wanted to add significant functionality but ensuring that the pop up would be easy to use. Other chrome extensions will spill over onto an extra page to access other parts of the application. We decided to keep it as simple as possible and confine all implementations such as search and the snips overview to the single pop up. This simplicity helped us focus on specific code snippets and reaffirms the purpose and objective of this application. Originally, we wanted to only allow access to the extension on Stack Overflow, but we realized that users want access to saved snippets on any website. We modified the manifest and then made accommodations for to other helpful sites, such as Mozilla Developers Network. Furthermore, we also decided that just having the code in plain text was not enough. We wanted to actually display the snippet in a way that would-be user friendly and similar to what a programmer might see in their own IDE - that’s where we leveraged the pretty print library which helped us read the snippets inside the pop up. We also surveyed users and ultimately changed up the background. We originally had white on white, but after one person shared key insight, we knew that needed to change it to a more readable version, which is why we decided on the background behind each snippet.  Without reaching out to get that extra perspective we might not have had the app we ended up with. Next, we decided that the pop up DOM must be different between when a user "searches" and when they just click on the extension to get a list of all the code snips on the page. We thought about including the
+search results above the code snips, but thought back to how we want to be as simple as possible and learned that you can hide or turn the display of elements off. This is how we have that feature when you search for a saved snip, the pop up makes all the code snippets from the current web page vanish. To have them reappear, the user just reopens the app. Finally, we also experienced a few stylistic bugs when we dealt with smaller code snippets. Sometimes the input box might be mashed over the code. We research a little about how margins, padding, and other features of DOM elements and then adjusted minimum sizes so that elements would always respect each other’s space.
+

@@ -1,0 +1,92 @@
+1)
+
+Documentation.txt
+
+Getting Set Up
+
+0) download our zipped project to desired location/directory
+1) unzip CodeSnipExtension.zip
+2) open chrome browser
+3) click on 3 vertical dots on top-right corner of browser
+4) select "Settings" from drop down
+5) click "Extensions"
+6) select "Load unpacked extension"
+7) navigate to the directory/location where project is saved and click the CodeSnipExtension folder
+8) press okay
+9) ensure extension is enabled (checkbox should be checked)
+
+Overview
+
+The purpose of Snip & Save is to simplify the process of saving and locating code snippets
+that you find important or helpful and want to reference at a later date. This application
+helps programmers stay organized by identifying code snips when user is on our supported
+websites, and generates a one-click to copy function and implements a save feature
+so if the programmer wants to specifically assign a title to that code snippet, they can
+do so and search for that piece of code whenever they would like in the future.
+
+If a user clicks our Snip & Save icon in the upper corner of the browser on any of the following websites:
+
+- stack overflow (fully supported)
+- google developers (fully supported)
+- mozilla developer network
+- microsoft developer network
+- national public mania npm
+
+The extension will scan the page, looking for code snippets (marked by the "pre" tag in html)
+and then returns those snippets inside the pop up box. For websites we "fully support" such
+as stack overflow and google documentation, we have enabled a complete syntax highlighting
+for users very much like some IDE environments like CS50 IDE or Atom or Sublime. On other 
+sites, like Mozilla, MSFT Developer Network, and NPM (National Public Mania) we are not
+currently supporting the syntax styling and highlighting, but all the code you need will appear
+in the pop up box.
+
+Users Guide
+
+We suggest navigating to stack overflow or any similar website we support and searching
+for a code problem you are interested in solving. Once you come to a page, and you can 
+see that the original poster or the replies do share code, we can leverage the extension
+and click too see a compiled and complete list of code snippets built for you, regardless of if you have
+scrolled to the bottom of the page or not. The pop up box is where all the functionality
+of the application resides. After clicking on the icon, you can see the snips and choose
+the one you would like to copy to the clipboard or save. To copy to the clipboard,
+click the icon on the left side (the one that looks like copies of paper) and then, you
+can press Control + V or right click and paste into your
+text editor or development environment. However, coders do not necessarily need that code
+at that specific time. We wanted to handle this by implementing a save feature. The icon
+to the left of the copy button is how we can do this and provided an input box to save a 
+title to the database so you can search for those key words at a later date. Simply, type
+the title inside of the box and click the save icon. You know the code is saved when you
+see the term you just entered disappeared. At this point we do require users to add a title
+and are error checking for valid input. We think this ultimatley this helps the user
+so we have provided a search bar at the top underneath our title and logo. Notice that when
+retrieving your saved code we refresh the pop up and only display that snippet. However,
+if you do want to go back to the current page's snips, just click out of the extension,
+allowing it to refresh and when you click into Snip & Save, all of the current pages
+code snippets will reappear. It is important to know that when retirving your code snippets
+from the database we need use the exact title and if you try to type in something that
+does not exist will will let the user know. While we specifically limit users to 
+Snip & Save code from the previously mentioned websites, please know that our application
+is configured to be accessible from any website. For example, if you are on facebook.com 
+but want to share code with a friend you found earlier, it does not in anyway require you
+to go back to our supported websites, you have the ability to open up the extension right
+there and search for any code you would like to share. Ultimately, the purpose of this 
+tool is to facilitate the management and organization of the sometimes large amount of 
+code programmers are tasked with handling. In one semester of CS50 we discussed a 
+multitude of not only programming language, but libraries, mark up languages, and other
+aspects of computer science. To bookmark everything we need for all these languages
+can be quite a feat, but we believe that Snip & Save is the perfect app to organize,
+copy snippets and empower users to get back to the most fun part - the actual coding!
+
+Sample links to try out: 
+
+https://stackoverflow.com/questions/13117358/hello-world-js-v8-vs2010
+
+http://stackoverflow.com/questions/1077347/hello-world-in-python
+
+http://stackoverflow.com/questions/18088246/select-only-elements-who-directly-contain-text?noredirect=1&lq=1
+
+https://developer.chrome.com/extensions/content_scripts
+
+
+
+
